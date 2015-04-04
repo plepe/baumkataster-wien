@@ -13,6 +13,11 @@
   </head>
   <body>
 <?php
+$db = new PDO("sqlite:data/baum.db");
+$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+$db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+include("inc/db.php");
+
 $form_def = array(
   'BAUMNUMMER' => array(
     'type' => 'text',
@@ -51,11 +56,6 @@ $form_search = new form("data", $form_def);
 
 $content = "";
 if($form_search->is_complete()) {
-  $db = new PDO("sqlite:data/baum.db");
-  $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
-  $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-  include("inc/db.php");
-
   $search = $form_search->get_data();
 
   $res = $db->query("select * from data where BAUMNUMMER regexp '^\s*' || ". $db->quote($search['BAUMNUMMER']) . " || '\s*$'");
@@ -71,6 +71,11 @@ if($form_search->is_complete()) {
     $content = "Kein Baum gefunden.";
   }
 }
+else {
+  $res = $db->query("select count(*) c from data");
+  $elem = $res->fetch();
+  $content = "<p>{$elem['c']} Bäume im Baumkataster. Stand: ". Date("d.m.Y", filemtime("data/baum.db"));
+}
 
 print "<form method='get'>\n";
 print $form_search->show();
@@ -79,6 +84,6 @@ print "</form>\n";
 
 print $content;
 ?>
-(cc) <a href='mailto:skunk@xover.mud.at'>Stephan Bösch-Plepelits</a>, <a href='https://github.com/plepe/baumkataster-wien'>Source Code (Github)</a>
+<p>(cc) <a href='mailto:skunk@xover.mud.at'>Stephan Bösch-Plepelits</a>, <a href='https://github.com/plepe/baumkataster-wien'>Source Code (Github)</a>
   </body>
 </html>
