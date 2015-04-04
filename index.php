@@ -65,8 +65,9 @@ if($form_search->is_complete()) {
   }
 
   if(sizeof($data)) {
+    $content .= sprintf("%d Bäume gefunden:", sizeof($data));
     $table = new table($table_def, $data);
-    $content = $table->show();
+    $content .= $table->show();
   }
   else {
     $content = "Kein Baum gefunden.";
