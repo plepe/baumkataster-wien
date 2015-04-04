@@ -2,6 +2,7 @@
 <?php include "modulekit/loader.php"; /* loads all php-includes */ ?>
 <?php call_hooks("init"); ?>
 <?php Header("content-type: text/html; charset=utf-8"); ?>
+<!DOCTYPE html>
 <html>
   <head>
     <title>Baumkataster Wien</title>
