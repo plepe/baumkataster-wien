@@ -79,5 +79,6 @@ print "</form>\n";
 
 print $content;
 ?>
+(cc) <a href='mailto:skunk@xover.mud.at'>Stephan Bösch-Plepelits</a>, <a href='https://github.com/plepe/baumkataster-wien'>Source Code (Github)</a>
   </body>
 </html>
