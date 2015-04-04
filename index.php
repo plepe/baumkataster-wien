@@ -1,6 +1,7 @@
 <?php include "conf.php"; /* load a local configuration */ ?>
 <?php include "modulekit/loader.php"; /* loads all php-includes */ ?>
 <?php call_hooks("init"); ?>
+<?php Header("content-type: text/html; charset=utf-8"); ?>
 <html>
   <head>
     <title>Baumkataster Wien</title>
@@ -24,13 +25,30 @@ $form_search = new form("data", $form_def);
 $content = "";
 if($form_search->is_complete()) {
   $db = new PDO("sqlite:data/baum.db");
+  $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+  $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
   include("inc/db.php");
 
   $search = $form_search->get_data();
 
   $res = $db->query("select * from data where BAUMNUMMER regexp '^\s*' || ". $db->quote($search['BAUMNUMMER']) . " || '\s*$'");
   while($elem = $res->fetch()) {
-    $content .= print_r($elem, 1);
+    $data[] = $elem;
+  }
+
+  if(sizeof($data)) {
+    $def = array();
+    foreach(array_keys($data[0]) as $k) {
+      $def[$k] = array(
+        "name" => $k,
+      );
+    }
+
+    $table = new table($def, $data);
+    $content = $table->show();
+  }
+  else {
+    $content = "Kein Baum gefunden.";
   }
 }
 
