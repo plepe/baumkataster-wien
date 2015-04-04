@@ -1,3 +1,15 @@
 [submodule "modulekit"]
 	path = modulekit
 	url = https://github.com/plepe/modulekit.git
+[submodule "modules/form"]
+	path = modules/form
+	url = https://github.com/plepe/modulekit-form.git
+[submodule "modules/lang"]
+	path = modules/lang
+	url = https://github.com/plepe/modulekit-lang.git
+[submodule "modules/base"]
+	path = modules/base
+	url = https://github.com/plepe/modulekit-base.git
+[submodule "modules/table"]
+	path = modules/table
+	url = https://github.com/plepe/modulekit-table.git
