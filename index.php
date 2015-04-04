@@ -20,6 +20,33 @@ $form_def = array(
   ),
 );
 
+$table_def = array(
+  'BAUMNUMMER' => array(
+    'name' => "Baum&shy;nummer",
+  ),
+  'GEBIET' => array(
+    'name' => "Gebiet",
+  ),
+  'STRASSE' => array(
+    'name' => "Straße / Park",
+  ),
+  'ART' => array(
+    'name' => "Art",
+  ),
+  'PFLANZJAHR' => array(
+    'name' => "Pflanz&shy;jahr",
+  ),
+  'STAMMUMFANG' => array(
+    'name' => "Stamm&shy;umfang",
+  ),
+  'KRONENDURCHMESSER' => array(
+    'name' => "Kronen&shy;durch&shy;messer",
+  ),
+  'BAUMHOEHE' => array(
+    'name' => "Baum&shy;höhe",
+  ),
+);
+
 $form_search = new form("data", $form_def);
 
 $content = "";
@@ -37,14 +64,7 @@ if($form_search->is_complete()) {
   }
 
   if(sizeof($data)) {
-    $def = array();
-    foreach(array_keys($data[0]) as $k) {
-      $def[$k] = array(
-        "name" => $k,
-      );
-    }
-
-    $table = new table($def, $data);
+    $table = new table($table_def, $data);
     $content = $table->show();
   }
   else {
