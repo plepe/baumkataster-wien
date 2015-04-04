@@ -21,14 +21,16 @@ $form_def = array(
 
 $form_search = new form("data", $form_def);
 
+$content = "";
 if($form_search->is_complete()) {
   $db = new PDO("sqlite:data/baum.db");
-  $db->query(".load /usr/lib/sqlite3/pcre.so");
+  include("inc/db.php");
+
   $search = $form_search->get_data();
 
-  $res = $db->query("select * from data where BAUMNUMMER=". $db->quote($search['BAUMNUMMER']));
+  $res = $db->query("select * from data where BAUMNUMMER regexp '^\s*' || ". $db->quote($search['BAUMNUMMER']) . " || '\s*$'");
   while($elem = $res->fetch()) {
-    print_r($elem);
+    $content .= print_r($elem, 1);
   }
 }
 
@@ -36,6 +38,8 @@ print "<form method='get'>\n";
 print $form_search->show();
 print "<input type='submit' value='Suche'>\n";
 print "</form>\n";
+
+print $content;
 ?>
   </body>
 </html>
