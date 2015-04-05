@@ -17,6 +17,10 @@ $form_search_def = array(
     'sql_function' => function($v) {
       global $db;
 
+      if(preg_match("/^([0-9]+)([0-9]{1})$/", $v, $m)) {
+	return "BAUMNUMMER in (". $db->quote($m[1]." ".$m[2]). ", ". $db->quote("{$m[1]}{$m[2]}  ").")";
+      }
+
       if(preg_match("/^([0-9]+) ?([0-9A-Za-z]+)?$/", $v, $m)) {
 	if(!$m[2])
 	  $m[2] = " ";
