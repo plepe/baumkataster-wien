@@ -24,8 +24,21 @@ $form_search = new form("data", $form_search_def);
 $content = "";
 if($form_search->is_complete()) {
   $search = $form_search->get_data();
+  $where = array();
 
-  $res = $db->query("select * from data where BAUMNUMMER regexp '^\s*' || ". $db->quote($search['BAUMNUMMER']) . " || '\s*$'");
+  foreach($search as $k=>$v) {
+    if($v !== null) {
+      if(!strpos('"', $k))
+	$where[] = '"'. $k . '"=' .  $db->quote($v);
+    }
+  }
+
+  if(sizeof($where))
+    $where = "where ". implode(" and ", $where);
+  else
+    $where = "";
+
+  $res = $db->query("select * from data ". $where);
   while($elem = $res->fetch()) {
     $data[] = $elem;
   }
