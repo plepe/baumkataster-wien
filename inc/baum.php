@@ -30,10 +30,10 @@ $form_search_def = array(
 
 $table_def = array(
   'BAUMNUMMER' => array(
-    'name' => "Baum&shy;nummer",
+    'name' => "Baum&shy;num&shy;mer",
   ),
   'GEBIET' => array(
-    'name' => "Gebiet",
+    'name' => "Ge&shy;biet",
   ),
   'STRASSE' => array(
     'name' => "Straße / Park",
@@ -46,11 +46,11 @@ $table_def = array(
     'format' => "{% if PFLANZJAHR %} {{ PFLANZJAHR }} {% endif %}",
   ),
   'STAMMUMFANG' => array(
-    'name' => "Stamm&shy;umfang",
+    'name' => "Stamm&shy;um&shy;fang",
     'format' => "{{ STAMMUMFANG }} cm",
   ),
   'KRONENDURCHMESSER' => array(
-    'name' => "Kronen&shy;durch&shy;messer",
+    'name' => "Kro&shy;nen&shy;durch&shy;mes&shy;ser",
     'format' => "{{ KRONENDURCHMESSER }} m",
   ),
   'BAUMHOEHE' => array(
@@ -58,7 +58,7 @@ $table_def = array(
     'format' => "{{ BAUMHOEHE }} m",
   ),
   'geo' => array(
-    'name' => "Koor&shy;dinaten",
+    'name' => "Koor&shy;dina&shy;ten",
     'format' => "<a target='_blank' href='http://www.openstreetmap.org/?mlat={{ LAT }}&amp;mlon={{ LON }}&zoom=18'>{{ LAT|number_format(5) }} {{ LON|number_format(5) }}</a>",
   ),
 );
