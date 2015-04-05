@@ -41,15 +41,19 @@ $table_def = array(
   ),
   'PFLANZJAHR' => array(
     'name' => "Pflanz&shy;jahr",
+    'format' => "{% if PFLANZJAHR %} {{ PFLANZJAHR }} {% endif %}",
   ),
   'STAMMUMFANG' => array(
     'name' => "Stamm&shy;umfang",
+    'format' => "{{ STAMMUMFANG }} cm",
   ),
   'KRONENDURCHMESSER' => array(
     'name' => "Kronen&shy;durch&shy;messer",
+    'format' => "{{ KRONENDURCHMESSER }} m",
   ),
   'BAUMHOEHE' => array(
     'name' => "Baum&shy;höhe",
+    'format' => "{{ BAUMHOEHE }} m",
   ),
 );
 
@@ -66,7 +70,9 @@ if($form_search->is_complete()) {
 
   if(sizeof($data)) {
     $content .= sprintf("%d Bäume gefunden:", sizeof($data));
-    $table = new table($table_def, $data);
+    $table = new table($table_def, $data, array(
+      'template_engine' => 'twig',
+    ));
     $content .= $table->show();
   }
   else {
