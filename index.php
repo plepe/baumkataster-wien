@@ -28,8 +28,13 @@ if($form_search->is_complete()) {
 
   foreach($search as $k=>$v) {
     if($v !== null) {
-      if(!strpos('"', $k))
-	$where[] = '"'. $k . '"=' .  $db->quote($v);
+      if(array_key_exists('sql_function', $form_search_def[$k])) {
+	$where[] = $form_search_def[$k]['sql_function']($v);
+      }
+      else {
+	if(!strpos('"', $k))
+	  $where[] = '"'. $k . '"=' .  $db->quote($v);
+      }
     }
   }
 

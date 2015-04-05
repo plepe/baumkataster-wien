@@ -14,6 +14,17 @@ $form_search_def = array(
   'BAUMNUMMER' => array(
     'type' => 'text',
     'name' => 'Baumnummer',
+    'sql_function' => function($v) {
+      global $db;
+
+      if(preg_match("/^([0-9]+) ?([0-9A-Za-z]+)?$/", $v, $m)) {
+	if(!$m[2])
+	  $m[2] = " ";
+	$m[2] = strtoupper($m[2]);
+
+	return "BAUMNUMMER=". $db->quote("{$m[1]} {$m[2]}");
+      }
+    },
   ),
 );
 
