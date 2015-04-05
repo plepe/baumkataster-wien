@@ -19,49 +19,7 @@ $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
 $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 include("inc/db.php");
 
-$form_def = array(
-  'BAUMNUMMER' => array(
-    'type' => 'text',
-    'name' => 'Baumnummer',
-  ),
-);
-
-$table_def = array(
-  'BAUMNUMMER' => array(
-    'name' => "Baum&shy;nummer",
-  ),
-  'GEBIET' => array(
-    'name' => "Gebiet",
-  ),
-  'STRASSE' => array(
-    'name' => "Straße / Park",
-  ),
-  'ART' => array(
-    'name' => "Art",
-  ),
-  'PFLANZJAHR' => array(
-    'name' => "Pflanz&shy;jahr",
-    'format' => "{% if PFLANZJAHR %} {{ PFLANZJAHR }} {% endif %}",
-  ),
-  'STAMMUMFANG' => array(
-    'name' => "Stamm&shy;umfang",
-    'format' => "{{ STAMMUMFANG }} cm",
-  ),
-  'KRONENDURCHMESSER' => array(
-    'name' => "Kronen&shy;durch&shy;messer",
-    'format' => "{{ KRONENDURCHMESSER }} m",
-  ),
-  'BAUMHOEHE' => array(
-    'name' => "Baum&shy;höhe",
-    'format' => "{{ BAUMHOEHE }} m",
-  ),
-  'geo' => array(
-    'name' => "Koor&shy;dinaten",
-    'format' => "<a target='_blank' href='http://www.openstreetmap.org/?mlat={{ LAT }}&amp;mlon={{ LON }}&zoom=18'>{{ LAT|number_format(5) }} {{ LON|number_format(5) }}</a>",
-  ),
-);
-
-$form_search = new form("data", $form_def);
+$form_search = new form("data", $form_search_def);
 
 $content = "";
 if($form_search->is_complete()) {
