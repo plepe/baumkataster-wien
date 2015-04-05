@@ -12,6 +12,8 @@ $db = new PDO("sqlite:data/baum.db");
 
 $db->beginTransaction();
 
+modify_headers($headers);
+
 $db->query("create table data (". implode(", ", array_map(function($col) {
   global $db;
 
@@ -20,6 +22,8 @@ $db->query("create table data (". implode(", ", array_map(function($col) {
 
 while($r = fgetcsv($f)) {
   $r = array_map("utf8_encode", $r);
+
+  modify_data($r);
 
   $db->query("insert into data values (". implode(", ", array_map(function($v) {
     global $db;

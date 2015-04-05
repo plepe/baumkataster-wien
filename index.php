@@ -55,6 +55,10 @@ $table_def = array(
     'name' => "Baum&shy;höhe",
     'format' => "{{ BAUMHOEHE }} m",
   ),
+  'geo' => array(
+    'name' => "Koor&shy;dinaten",
+    'format' => "<a target='_blank' href='http://www.openstreetmap.org/?mlat={{ LAT }}&amp;mlon={{ LON }}&zoom=18'>{{ LAT|number_format(5) }} {{ LON|number_format(5) }}</a>",
+  ),
 );
 
 $form_search = new form("data", $form_def);
