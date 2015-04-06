@@ -18,6 +18,7 @@ $db = new PDO("sqlite:data/baum.db");
 $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
 $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 include("inc/db.php");
+$max_list = 30;
 
 $form_search = new form(null, $form_search_def, array(
     'orig_data' => false,
@@ -47,12 +48,24 @@ if($form_search->is_complete()) {
     $where = "";
 
   $res = $db->query("select * from data ". $where);
+  $count = 0;
   while($elem = $res->fetch()) {
+    $count++;
+
+    // note: PDO SQLite does not support rowCount
+    if($count > $max_list)
+      continue;
+
     $data[] = $elem;
   }
+  $res->closeCursor();
 
   if(sizeof($data)) {
-    $content .= sprintf("%d Bäume gefunden:", sizeof($data));
+    if($count > $max_list)
+      $content .= sprintf("%d Bäume gefunden (%d gelistet):", $count, $max_list);
+    else
+      $content .= sprintf("%d Bäume gefunden:", $count);
+
     $table = new table($table_def, $data, array(
       'template_engine' => 'twig',
     ));
