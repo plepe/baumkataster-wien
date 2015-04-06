@@ -33,7 +33,8 @@ if($form_search->is_complete()) {
   foreach($search as $k=>$v) {
     if($v !== null) {
       if(array_key_exists('sql_function', $form_search_def[$k])) {
-	$where[] = $form_search_def[$k]['sql_function']($v);
+	if($w = $form_search_def[$k]['sql_function']($v))
+	  $where[] = $w;
       }
       else {
 	if(!strpos('"', $k))
