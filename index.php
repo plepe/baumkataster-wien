@@ -19,11 +19,14 @@ $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
 $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 include("inc/db.php");
 
-$form_search = new form("data", $form_search_def);
+$form_search = new form(null, $form_search_def, array(
+    'orig_data' => false,
+  ));
 
 $content = "";
 if($form_search->is_complete()) {
-  $search = $form_search->get_data();
+  $search = $form_search->save_data();
+  $form_search->set_orig_data($search);
   $where = array();
 
   foreach($search as $k=>$v) {
