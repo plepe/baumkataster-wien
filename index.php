@@ -28,7 +28,10 @@ $content = "";
 if($form_search->is_complete()) {
   $search = $form_search->save_data();
   $form_search->set_orig_data($search);
+
   $where = array();
+  $add_columns = "";
+  $order = "";
 
   foreach($search as $k=>$v) {
     if($v !== null) {
@@ -43,12 +46,18 @@ if($form_search->is_complete()) {
     }
   }
 
+  if($search['location']) {
+    $add_columns .= sprintf(", distance(lat, lon, %f, %f) as distance", $search['location']['latitude'], $search['location']['longitude']);
+    $where[] = "distance <= 1000";
+    $order = "order by distance asc";
+  }
+
   if(sizeof($where))
     $where = "where ". implode(" and ", $where);
   else
     $where = "";
 
-  $res = $db->query("select * from data ". $where);
+  $res = $db->query("select * {$add_columns} from data {$where} {$order}");
   $count = 0;
   while($elem = $res->fetch()) {
     $count++;

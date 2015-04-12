@@ -33,6 +33,7 @@ $form_search_def = array(
   'location' => array(
     'type' => 'geolocation',
     'name' => "In der Umgebung von",
+    'desc' => "Nur Bäume im Umkreis von max. 1km",
     'sql_function' => function($v) {
       return null;
     },
@@ -71,5 +72,9 @@ $table_def = array(
   'geo' => array(
     'name' => "Koor&shy;dina&shy;ten",
     'format' => "<a target='_blank' href='http://www.openstreetmap.org/?mlat={{ LAT }}&amp;mlon={{ LON }}&zoom=18'>{{ LAT|number_format(5) }} {{ LON|number_format(5) }}</a>",
+  ),
+  'distance' => array(
+    'name' => "Ent&shy;fern&shy;ung",
+    'format' => "{% if distance %}{{ distance|number_format(0) }} m{% endif %}",
   ),
 );
