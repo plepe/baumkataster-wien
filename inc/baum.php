@@ -30,6 +30,13 @@ $form_search_def = array(
       }
     },
   ),
+  'location' => array(
+    'type' => 'geolocation',
+    'name' => "In der Umgebung von",
+    'sql_function' => function($v) {
+      return null;
+    },
+  ),
 );
 
 $table_def = array(
