@@ -1,7 +1,7 @@
 <?php
 function modify_headers(&$headers) {
-  $headers[] = "LAT";
-  $headers[] = "LON";
+  $headers[] = array("LAT", "real");
+  $headers[] = array("LON", "real");
 }
 
 function modify_data(&$data) {

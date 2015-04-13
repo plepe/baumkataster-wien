@@ -17,7 +17,11 @@ modify_headers($headers);
 $db->query("create table data (". implode(", ", array_map(function($col) {
   global $db;
 
-  return $db->quote($col) . " text";
+  if(is_array($col)) {
+    return $db->quote($col[0]) ." ". $col[1];
+  }
+  else
+    return $db->quote($col) . " text";
 }, $headers)) . ")");
 
 while($r = fgetcsv($f)) {
