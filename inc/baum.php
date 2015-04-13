@@ -35,7 +35,21 @@ $form_search_def = array(
     'name' => "In der Umgebung von",
     'desc' => "Nur Bäume im Umkreis von max. 1km",
     'sql_function' => function($v) {
-      return null;
+      global $db;
+
+      // 0.0090 resp 0.0135 is approx. 1.5km at the center of Vienna, Austria
+      $bbox = array(
+	(float)$v['latitude'] - 0.0090,
+	(float)$v['longitude'] - 0.0135,
+	(float)$v['latitude'] + 0.0090,
+	(float)$v['longitude'] + 0.0135
+      );
+
+      return array(
+        'add_columns' => "distance(lat, lon, ". $db->quote($v['latitude']) .", ". $db->quote($v['longitude']) .") as distance",
+	'order' => "distance asc",
+	'where' => "distance <= 1000 and lat >= {$bbox[0]} and lon >= {$bbox[1]} and lat <= {$bbox[2]} and lon <= {$bbox[3]}",
+      );
     },
   ),
 );

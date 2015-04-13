@@ -30,14 +30,23 @@ if($form_search->is_complete()) {
   $form_search->set_orig_data($search);
 
   $where = array();
-  $add_columns = "";
-  $order = "";
+  $add_columns = array();
+  $order = array();
 
   foreach($search as $k=>$v) {
     if($v !== null) {
       if(array_key_exists('sql_function', $form_search_def[$k])) {
 	if($w = $form_search_def[$k]['sql_function']($v))
-	  $where[] = $w;
+	  if(is_array($w)) {
+	    if(array_key_exists('where', $w))
+	      $where[] = $w['where'];
+	    if(array_key_exists('order', $w))
+	      $order[] = $w['order'];
+	    if(array_key_exists('add_columns', $w))
+	      $add_columns[] = $w['add_columns'];
+	  }
+	  else
+	    $where[] = $w;
       }
       else {
 	if(!strpos('"', $k))
@@ -46,27 +55,24 @@ if($form_search->is_complete()) {
     }
   }
 
-  if($search['location']) {
-    $add_columns .= ", distance(lat, lon, ". $db->quote($search['location']['latitude']) .", ". $db->quote($search['location']['longitude']) .") as distance";
-    $where[] = "distance <= 1000";
-    $order = "order by distance asc";
-
-    // 0.0090 resp 0.0135 is approx. 1.5km at the center of Vienna, Austria
-    $bbox = array(
-      (float)$search['location']['latitude'] - 0.0090,
-      (float)$search['location']['longitude'] - 0.0135,
-      (float)$search['location']['latitude'] + 0.0090,
-      (float)$search['location']['longitude'] + 0.0135
-    );
-    $where[] = "lat >= {$bbox[0]} and lon >= {$bbox[1]} and lat <= {$bbox[2]} and lon <= {$bbox[3]}";
-  }
-
   if(sizeof($where))
     $where = "where ". implode(" and ", $where);
   else
     $where = "";
 
-  $res = $db->query("select * {$add_columns} from data {$where} {$order}");
+  if(sizeof($add_columns))
+    $add_columns = ", ". implode(", ", $add_columns);
+  else
+    $add_columns = "";
+
+  if(sizeof($order))
+    $order = "order by ". implode(", ", $order);
+  else
+    $order = "";
+
+  $query = "select *{$add_columns} from data {$where} {$order}";
+  //print "<pre wrap>". htmlspecialchars($query) ."</pre>\n";
+  $res = $db->query($query);
   $count = 0;
   while($elem = $res->fetch()) {
     $count++;
