@@ -36,4 +36,8 @@ while($r = fgetcsv($f)) {
   }, $r)) . ")");
 }
 
+// Indexes
+$db->query("create index data_lat on data(LAT)");
+$db->query("create index data_lon on data(LON)");
+
 $db->commit();

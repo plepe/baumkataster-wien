@@ -50,6 +50,15 @@ if($form_search->is_complete()) {
     $add_columns .= ", distance(lat, lon, ". $db->quote($search['location']['latitude']) .", ". $db->quote($search['location']['longitude']) .") as distance";
     $where[] = "distance <= 1000";
     $order = "order by distance asc";
+
+    // 0.0090 resp 0.0135 is approx. 1.5km at the center of Vienna, Austria
+    $bbox = array(
+      (float)$search['location']['latitude'] - 0.0090,
+      (float)$search['location']['longitude'] - 0.0135,
+      (float)$search['location']['latitude'] + 0.0090,
+      (float)$search['location']['longitude'] + 0.0135
+    );
+    $where[] = "lat >= {$bbox[0]} and lon >= {$bbox[1]} and lat <= {$bbox[2]} and lon <= {$bbox[3]}";
   }
 
   if(sizeof($where))
