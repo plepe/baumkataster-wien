@@ -47,7 +47,7 @@ if($form_search->is_complete()) {
   }
 
   if($search['location']) {
-    $add_columns .= sprintf(", distance(lat, lon, %f, %f) as distance", $search['location']['latitude'], $search['location']['longitude']);
+    $add_columns .= ", distance(lat, lon, ". $db->quote($search['location']['latitude']) .", ". $db->quote($search['location']['longitude']) .") as distance";
     $where[] = "distance <= 1000";
     $order = "order by distance asc";
   }
