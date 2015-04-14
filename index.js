@@ -1,4 +1,5 @@
 var orig_search_param;
+var reload_active = false;
 var data;
 
 function update_distances() {
@@ -18,6 +19,7 @@ function update_distances() {
 }
 
 function update_data(search_param, _data) {
+  reload_active = false;
   orig_search_param = search_param;
 
   if((!_data) || (!_data.data)) {
@@ -35,12 +37,30 @@ function update_data(search_param, _data) {
   content_div.innerHTML = t.show("html", { limit: max_list });
 }
 
-function update_location() {
-  if(!data) {
-    search_param = form_search.get_data();
-    ajax("data.php", search_param, update_data.bind(this, search_param));
-    return;
+function update_location(reload) {
+  if(data) {
+    var search_param = form_search.get_data();
+    var distance = haversine({
+	latitude: search_param.location.latitude,
+	longitude: search_param.location.longitude
+      }, {
+	latitude: orig_search_param.location.latitude,
+	longitude: orig_search_param.location.longitude,
+      }, {unit: 'meter'});
+
+    if(distance > 100)
+      reload = true;
   }
+  else
+    reload = true;
+
+  if(reload && (!reload_active))
+    ajax("data.php", search_param, update_data.bind(this, search_param));
+    reload_active = true;
+  }
+
+  if(!data)
+    return;
 
   update_distances();
 }
