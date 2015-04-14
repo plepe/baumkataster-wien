@@ -58,7 +58,7 @@ else {
   $content = "<p>{$elem['c']} Bäume im Baumkataster. Stand: ". Date("d.m.Y", filemtime("data/baum.db"));
 }
 
-print "<form method='get'>\n";
+print "<form id='form_search' method='get'>\n";
 print $form_search->show();
 print "<input type='submit' value='Suche'>\n";
 print "</form>\n";

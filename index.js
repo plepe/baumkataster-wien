@@ -34,6 +34,7 @@ function update_table() {
 function update_data(search_param, _data) {
   reload_active = false;
   orig_search_param = search_param;
+  form_search.set_orig_data(search_param);
 
   if((!_data) || (!_data.data)) {
     alert("Error loading data!");
@@ -76,6 +77,10 @@ function update_location(reload) {
 window.onload = function() {
   form_search = form__;
   form_search.onchange = update_location;
+  document.getElementById("form_search").onsubmit = function() {
+    update_location(true);
+    return false;
+  }
 
   orig_search_param = form_search.get_data();
 }
