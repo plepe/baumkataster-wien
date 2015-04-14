@@ -1,7 +1,7 @@
 <?php include "conf.php"; /* load a local configuration */ ?>
 <?php include "modulekit/loader.php"; /* loads all php-includes */ ?>
 <?php call_hooks("init"); ?>
-<?php Header("content-type: application/javascript; charset=utf-8"); ?>
+<?php Header("content-type: application/json; charset=utf-8"); ?>
 <?php
 $db = new PDO("sqlite:data/baum.db");
 $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
