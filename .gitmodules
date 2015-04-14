@@ -13,3 +13,6 @@
 [submodule "modules/table"]
 	path = modules/table
 	url = https://github.com/plepe/modulekit-table.git
+[submodule "modules/ajax"]
+	path = modules/ajax
+	url = https://github.com/plepe/modulekit-ajax.git
