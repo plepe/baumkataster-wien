@@ -90,5 +90,6 @@ $table_def = array(
   'distance' => array(
     'name' => "Ent&shy;fern&shy;ung",
     'format' => "{% if distance %}{{ distance|number_format(0) }} m{% endif %}",
+    'sort' => array("type" => "num", "dir" => "asc"),
   ),
 );
