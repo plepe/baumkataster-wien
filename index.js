@@ -18,6 +18,19 @@ function update_distances() {
   }
 }
 
+function update_table() {
+  if(!data.data)
+    return;
+
+  update_distances();
+
+  var content_div = document.getElementById("content");
+  var t = new table(table_def, data.data, {
+    template_engine: "twig"
+  });
+  content_div.innerHTML = t.show("html", { limit: max_list });
+}
+
 function update_data(search_param, _data) {
   reload_active = false;
   orig_search_param = search_param;
@@ -28,13 +41,7 @@ function update_data(search_param, _data) {
   }
 
   data = _data;
-  update_distances();
-
-  var content_div = document.getElementById("content");
-  var t = new table(table_def, data.data, {
-    template_engine: "twig"
-  });
-  content_div.innerHTML = t.show("html", { limit: max_list });
+  update_table();
 }
 
 function update_location(reload) {
@@ -62,7 +69,7 @@ function update_location(reload) {
   if(!data)
     return;
 
-  update_distances();
+  update_table();
 }
 
 window.onload = function() {
