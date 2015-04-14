@@ -8,5 +8,6 @@ $include = array(
   ),
   'js' => array(
     'index.js',
+    'inc/haversine.js',
   ),
 );
