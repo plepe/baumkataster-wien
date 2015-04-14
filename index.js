@@ -28,7 +28,18 @@ function update_table() {
   var t = new table(table_def, data.data, {
     template_engine: "twig"
   });
-  content_div.innerHTML = t.show("html", { limit: max_list });
+
+  var content = "";
+  if(data.data.length > max_list)
+    content += sprintf("%d Bäume gefunden (%d gelistet):", data.data.length, max_list);
+  else if(data.data.length == 0)
+    content += "Kein Baum gefunden.";
+  else
+    content += sprintf("%d Bäume gefunden:", data.data.length);
+
+  content += t.show("html", { limit: max_list });
+
+  content_div.innerHTML = content;
 }
 
 function update_data(search_param, _data) {

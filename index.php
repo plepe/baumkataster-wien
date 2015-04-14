@@ -39,7 +39,7 @@ if($form_search->is_complete()) {
       $content .= sprintf("%d Bäume gefunden (%d gelistet):", sizeof($data), $max_list);
     }
     else
-      $content .= sprintf("%d Bäume gefunden:", $count);
+      $content .= sprintf("%d Bäume gefunden:", sizeof($data));
 
     $table = new table($table_def, $data, array(
       'template_engine' => 'twig',
