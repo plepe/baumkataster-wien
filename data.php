@@ -16,7 +16,10 @@ if($form_search->is_complete()) {
   $search = $form_search->save_data();
   $form_search->set_orig_data($search);
 
-  $data = get_data($search, $form_search_def);
+  $data = array(
+    'date' => Date("c", filemtime("data/baum.db")),
+    'data' => get_data($search, $form_search_def),
+  );
 
   print json_readable_encode($data);
 }
