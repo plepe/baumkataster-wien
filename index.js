@@ -1,13 +1,15 @@
 var orig_search_param;
 var data;
 
-function update_data(search_param, data) {
+function update_data(search_param, _data) {
   orig_search_param = search_param;
 
-  if((!data) || (!data.data)) {
+  if((!_data) || (!_data.data)) {
     alert("Error loading data!");
     return;
   }
+
+  data = _data;
 
   var content_div = document.getElementById("content");
   var t = new table(table_def, data.data, {
