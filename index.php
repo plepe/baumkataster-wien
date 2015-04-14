@@ -3,7 +3,8 @@
 <?php call_hooks("init"); ?>
 <?php Header("content-type: text/html; charset=utf-8"); ?>
 <?php
-html_export_var(array("table_def" => $table_def));
+$max_list = 30;
+html_export_var(array("table_def" => $table_def, "max_list" => $max_list));
 ?>
 <!DOCTYPE html>
 <html>
@@ -21,7 +22,6 @@ $db = new PDO("sqlite:data/baum.db");
 $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
 $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 include("inc/db.php");
-$max_list = 30;
 
 $form_search = new form(null, $form_search_def, array(
     'orig_data' => false,
@@ -37,7 +37,6 @@ if($form_search->is_complete()) {
   if(sizeof($data)) {
     if(sizeof($data) > $max_list) {
       $content .= sprintf("%d Bäume gefunden (%d gelistet):", sizeof($data), $max_list);
-      $data = array_slice($data, 0, $max_list);
     }
     else
       $content .= sprintf("%d Bäume gefunden:", $count);
@@ -45,7 +44,9 @@ if($form_search->is_complete()) {
     $table = new table($table_def, $data, array(
       'template_engine' => 'twig',
     ));
-    $content .= $table->show();
+    $content .= $table->show("html", array(
+      "limit" => $max_list,
+    ));
   }
   else {
     $content = "Kein Baum gefunden.";

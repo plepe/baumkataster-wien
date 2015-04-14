@@ -13,7 +13,7 @@ function update_data(search_param, data) {
   var t = new table(table_def, data.data, {
     template_engine: "twig"
   });
-  content_div.innerHTML = t.show();
+  content_div.innerHTML = t.show("html", { limit: max_list });
 }
 
 function update_location() {
