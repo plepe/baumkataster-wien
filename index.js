@@ -45,8 +45,9 @@ function update_data(search_param, _data) {
 }
 
 function update_location(reload) {
+  var search_param = form_search.get_data();
+
   if(data) {
-    var search_param = form_search.get_data();
     var distance = haversine({
 	latitude: search_param.location.latitude,
 	longitude: search_param.location.longitude
@@ -61,7 +62,7 @@ function update_location(reload) {
   else
     reload = true;
 
-  if(reload && (!reload_active))
+  if(reload && (!reload_active)) {
     ajax("data.php", search_param, update_data.bind(this, search_param));
     reload_active = true;
   }
