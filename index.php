@@ -2,6 +2,9 @@
 <?php include "modulekit/loader.php"; /* loads all php-includes */ ?>
 <?php call_hooks("init"); ?>
 <?php Header("content-type: text/html; charset=utf-8"); ?>
+<?php
+html_export_var(array("table_def" => $table_def));
+?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -59,7 +62,9 @@ print $form_search->show();
 print "<input type='submit' value='Suche'>\n";
 print "</form>\n";
 
+print "<div id='content'>\n";
 print $content;
+print "</div>\n";
 ?>
 <p>(cc) <a href='mailto:skunk@xover.mud.at'>Stephan Bösch-Plepelits</a>, <a href='https://github.com/plepe/baumkataster-wien'>Source Code (Github)</a>
   </body>

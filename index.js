@@ -1,9 +1,19 @@
 var orig_search_param;
 var data;
 
-function update_data(search_param, result) {
+function update_data(search_param, data) {
   orig_search_param = search_param;
-  data = result.responseJSON;
+
+  if((!data) || (!data.data)) {
+    alert("Error loading data!");
+    return;
+  }
+
+  var content_div = document.getElementById("content");
+  var t = new table(table_def, data.data, {
+    template_engine: "twig"
+  });
+  content_div.innerHTML = t.show();
 }
 
 function update_location() {
