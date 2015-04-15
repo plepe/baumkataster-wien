@@ -24,22 +24,15 @@ function update_table() {
 
   update_distances();
 
-  var content_div = document.getElementById("content");
   var t = new table(table_def, data.data, {
     template_engine: "twig"
   });
 
-  var content = "";
-  if(data.data.length > max_list)
-    content += sprintf("%d Bäume gefunden (%d gelistet):", data.data.length, max_list);
-  else if(data.data.length == 0)
-    content += "Kein Baum gefunden.";
-  else
-    content += sprintf("%d Bäume gefunden:", data.data.length);
+  var table_content = "";
+  if(data.data.length > 0)
+    table_content = t.show("html", { limit: max_list });
 
-  content += t.show("html", { limit: max_list });
-
-  content_div.innerHTML = content;
+  document.getElementById("table").innerHTML = table_content;
 }
 
 function update_data(search_param, _data) {
@@ -54,6 +47,11 @@ function update_data(search_param, _data) {
 
   data = _data;
   update_table();
+
+  twig_render_into(document.getElementById("search_status"), "result.html", {
+    'count': data.data.length,
+    'max_list': max_list
+  });
 
   twig_render_into(document.getElementById("footer"), "footer.html", data.info);
 }

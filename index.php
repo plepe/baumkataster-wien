@@ -34,22 +34,19 @@ if($form_search->is_complete()) {
 
   $data = get_data($search, $form_search_def);
 
-  if(sizeof($data)) {
-    if(sizeof($data) > $max_list) {
-      $content .= sprintf("%d Bäume gefunden (%d gelistet):", sizeof($data), $max_list);
-    }
-    else
-      $content .= sprintf("%d Bäume gefunden:", sizeof($data));
+  $search_status = twig_render("result.html", array(
+    'count' => sizeof($data),
+    'max_list' => $max_list,
+  ));
 
+  $table_content = "";
+  if(sizeof($data)) {
     $table = new table($table_def, $data, array(
       'template_engine' => 'twig',
     ));
-    $content .= $table->show("html", array(
+    $table_content = $table->show("html", array(
       "limit" => $max_list,
     ));
-  }
-  else {
-    $content = "Kein Baum gefunden.";
   }
 }
 else {
@@ -62,7 +59,8 @@ print "<input type='submit' value='Suche'>\n";
 print "</form><hr>\n";
 
 print "<div id='content'>\n";
-print $content;
+print "<div id='search_status'>{$search_status}</div>\n";
+print "<div id='table'>{$table_content}</div>\n";
 print "</div>\n";
 ?>
 <div id='footer'>

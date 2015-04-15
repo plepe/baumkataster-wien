@@ -1,0 +1,9 @@
+{% if count == 0 %}
+Kein Baum gefunden.
+{% elseif count > max_list %}
+{{ count }} Bäume gefunden ({{ max_list }} gelistet):
+{% elseif count == 1 %}
+1 Baum gefunden:
+{% else %}
+{{ count }} Bäume gefunden:
+{% endif %}
