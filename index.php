@@ -53,20 +53,25 @@ if($form_search->is_complete()) {
   }
 }
 else {
-  $res = $db->query("select count(*) c from data");
-  $elem = $res->fetch();
-  $content = "<p>{$elem['c']} Bäume im Baumkataster. Stand: ". Date("d.m.Y", filemtime("data/baum.db"));
+  $content = "Bitte Baumnummer angeben oder auf Erkennung Deiner Position warten.";
 }
 
 print "<form id='form_search' method='get'>\n";
 print $form_search->show();
 print "<input type='submit' value='Suche'>\n";
-print "</form>\n";
+print "</form><hr>\n";
 
 print "<div id='content'>\n";
 print $content;
 print "</div>\n";
 ?>
-<p>(cc) <a href='mailto:skunk@xover.mud.at'>Stephan Bösch-Plepelits</a>, <a href='https://github.com/plepe/baumkataster-wien'>Source Code (Github)</a>
+<hr>
+<?php
+$res = $db->query("select count(*) c from data");
+$elem = $res->fetch();
+print "{$elem['c']} Bäume im Baumkataster. Stand: ". Date("d.m.Y", filemtime("data/baum.db"));
+?>
+<br>
+(cc) <a href='mailto:skunk@xover.mud.at'>Stephan Bösch-Plepelits</a>, <a href='https://github.com/plepe/baumkataster-wien'>Source Code (Github)</a>
   </body>
 </html>
