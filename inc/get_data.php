@@ -46,6 +46,7 @@ function get_data($search, $form_search_def) {
   $query = "select *{$add_columns} from data {$where} {$order}";
   //print "<pre wrap>". htmlspecialchars($query) ."</pre>\n";
   $res = $db->query($query);
+  $data = array();
   while($elem = $res->fetch()) {
     $data[] = $elem;
   }
