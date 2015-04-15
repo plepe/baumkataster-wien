@@ -54,6 +54,8 @@ function update_data(search_param, _data) {
 
   data = _data;
   update_table();
+
+  twig_render_into(document.getElementById("footer"), "footer.html", data.info);
 }
 
 function update_location(reload) {
