@@ -28,6 +28,8 @@ $form_search_def = array(
 
 	return "BAUMNUMMER=". $db->quote("{$m[1]} {$m[2]}");
       }
+
+      return "BAUMNUMMER=". $db->quote($v);
     },
   ),
   'location' => array(
