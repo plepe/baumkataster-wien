@@ -34,6 +34,9 @@ $form_search_def = array(
     'type' => 'geolocation',
     'name' => "In der Umgebung von",
     'desc' => "Nur Bäume im Umkreis von max. 1km",
+    'options' => array(
+      'enableHighAccuracy' => true,
+    ),
     'sql_function' => function($v) {
       global $db;
 
