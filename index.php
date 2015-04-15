@@ -67,9 +67,9 @@ print "</div>\n";
 ?>
 <hr>
 <?php
-$res = $db->query("select count(*) c from data");
-$elem = $res->fetch();
-print "{$elem['c']} Bäume im Baumkataster. Stand: ". Date("d.m.Y", filemtime("data/baum.db"));
+$info = data_info();
+$date = new DateTime($info['date']);
+print "{$info['count']} Bäume im Baumkataster. Stand: ". $date->format("d.m.Y");
 ?>
 <br>
 (cc) <a href='mailto:skunk@xover.mud.at'>Stephan Bösch-Plepelits</a>, <a href='https://github.com/plepe/baumkataster-wien'>Source Code (Github)</a>

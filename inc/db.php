@@ -29,3 +29,17 @@ $db->sqliteCreateFunction('distance',
     return acos(sin($geo[0]) * sin($geo[2]) + cos($geo[0]) * cos($geo[2]) * cos($geo[1] - $geo[3])) * 6378140;
   },
   4);
+
+function data_info() {
+  global $db;
+
+  $res = $db->query("select count(*) c from data");
+  $elem = $res->fetch();
+
+  $date = Date("c", filemtime("data/baum.db"));
+
+  return array(
+    'count' => $elem['c'],
+    'date' => $date,
+  );
+}

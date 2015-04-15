@@ -17,7 +17,7 @@ if($form_search->is_complete()) {
   $form_search->set_orig_data($search);
 
   $data = array(
-    'date' => Date("c", filemtime("data/baum.db")),
+    'info' => data_info(),
     'data' => get_data($search, $form_search_def),
   );
 
