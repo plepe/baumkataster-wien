@@ -1,0 +1,8 @@
+body #load_status {
+  display: none;
+  margin-left: 1em;
+}
+body.loading #load_status {
+  display: inline;
+  vertical-align: middle;
+}

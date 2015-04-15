@@ -37,6 +37,8 @@ function update_table() {
 
 function update_data(search_param, _data) {
   reload_active = false;
+  document.body.className = "";
+
   orig_search_param = search_param;
   form_search.set_orig_data(search_param);
 
@@ -76,6 +78,7 @@ function update_location(reload) {
 
   if(reload && (!reload_active)) {
     ajax("data.php", search_param, update_data.bind(this, search_param));
+    document.body.className = "loading";
     reload_active = true;
   }
 

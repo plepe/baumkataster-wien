@@ -10,4 +10,7 @@ $include = array(
     'index.js',
     'inc/haversine.js',
   ),
+  'css' => array(
+    'style.css',
+  ),
 );

@@ -55,7 +55,8 @@ else {
 
 print "<form id='form_search' method='get'>\n";
 print $form_search->show();
-print "<input type='submit' value='Suche'>\n";
+print "<input type='submit' value='Suche'>";
+print "<span id='load_status'>". twig_render("load_status.html", array()) ."</span>\n";
 print "</form><hr>\n";
 
 print "<div id='content'>\n";
