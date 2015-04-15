@@ -65,13 +65,10 @@ print "<div id='content'>\n";
 print $content;
 print "</div>\n";
 ?>
-<hr>
+<div id='footer'>
 <?php
-$info = data_info();
-$date = new DateTime($info['date']);
-print "{$info['count']} Bäume im Baumkataster. Stand: ". $date->format("d.m.Y");
+print twig_render("footer.html", data_info());
 ?>
-<br>
-(cc) <a href='mailto:skunk@xover.mud.at'>Stephan Bösch-Plepelits</a>, <a href='https://github.com/plepe/baumkataster-wien'>Source Code (Github)</a>
+</div>
   </body>
 </html>
