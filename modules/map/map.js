@@ -1,4 +1,5 @@
 var map;
+var map_features;
 
 register_hook("init", function() {
   map = L.map('map').setView([map_config.lat, map_config.lon], map_config.zoom);
@@ -15,4 +16,26 @@ register_hook("update_location", function(data) {
       [ data.location.latitude, data.location.longitude ]
     );
   }
+});
+
+register_hook("update_data", function(data) {
+  var features = [];
+  for(var i = 0; i < data.data.length; i++) {
+    var el = data.data[i];
+
+    features.push(new L.circleMarker([ el.LAT, el.LON ], {
+      radius: 3,
+      stroke: true,
+      color: '#00ff00',
+      weight: 1,
+      fillOpacity: 1,
+      fill: true,
+      fillColor: '#007f00'
+    }));
+  }
+
+  if(map_features)
+    map.removeLayer(map_features);
+
+  map_features = new L.featureGroup(features).addTo(map);
 });

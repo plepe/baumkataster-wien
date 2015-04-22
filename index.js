@@ -50,6 +50,8 @@ function update_data(search_param, _data) {
   data = _data;
   update_table();
 
+  call_hooks("update_data", data);
+
   twig_render_into(document.getElementById("search_status"), "result.html", {
     'count': data.data.length,
     'max_list': max_list
