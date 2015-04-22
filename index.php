@@ -17,6 +17,7 @@ html_export_var(array("table_def" => $table_def, "max_list" => $max_list));
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
+<?php call_hooks("html_head"); ?>
 <?php
 $db = new PDO("sqlite:data/baum.db");
 $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
@@ -53,6 +54,7 @@ else {
   $content = "Bitte Baumnummer angeben oder auf Erkennung Deiner Position warten.";
 }
 
+print "<div id='content-container'>\n";
 print "<form id='form_search' method='get'>\n";
 print $form_search->show();
 print "<input type='submit' value='Suche'>";
@@ -69,5 +71,7 @@ print "</div>\n";
 print twig_render("footer.html", data_info());
 ?>
 </div>
+</div>
+<?php call_hooks("html_bottom"); ?>
   </body>
 </html>
