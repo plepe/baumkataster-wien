@@ -1,1 +1,9 @@
 <?php
+$map_config = array(
+  'lat' => 48.20836,
+  'lon' => 16.36776,
+  'zoom' => 15,
+  'url' => 'http://tiles-base.openstreetbrowser.org/tiles/basemap_base/{z}/{x}/{y}.png',
+  'maxZoom' => 18,
+  'attribution' => 'Map Data: &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, Rendering: &copy; <a href="http://www.openstreetbrowser.org">OpenStreetBrowser</a>',
+);

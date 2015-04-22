@@ -1,5 +1,5 @@
 <?php
-$depend = array("modulekit-form", "modulekit-table", "twig", "modulekit-form-geolocation", "json_readable_encode", "modulekit-ajax");
+$depend = array("modulekit-form", "modulekit-table", "twig", "modulekit-form-geolocation", "json_readable_encode", "modulekit-ajax", "map");
 
 $include = array(
   'php'=> array(
