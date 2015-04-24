@@ -81,7 +81,7 @@ function update_location(reload) {
   call_hooks("update_location", search_param);
 
   if(reload && (!reload_active)) {
-    ajax("data.php", search_param, update_data.bind(this, search_param));
+    ajax("data.php", form_search.get_request_data(), update_data.bind(this, search_param));
     document.body.className = "loading";
     reload_active = true;
   }
