@@ -65,36 +65,45 @@ $table_def = array(
   ),
   'GEBIET' => array(
     'name' => "Ge&shy;biet",
+    'show_priority' => 1,
   ),
   'STRASSE' => array(
     'name' => "Straße / Park",
+    'show_priority' => 6,
   ),
   'ART' => array(
     'name' => "Art",
+    'show_priority' => 7,
   ),
   'PFLANZJAHR' => array(
     'name' => "Pflanz&shy;jahr",
     'format' => "{% if PFLANZJAHR %} {{ PFLANZJAHR }} {% endif %}",
+    'show_priority' => 3,
   ),
   'STAMMUMFANG' => array(
     'name' => "Stamm&shy;um&shy;fang",
     'format' => "{{ STAMMUMFANG }} cm",
+    'show_priority' => 2,
   ),
   'KRONENDURCHMESSER' => array(
     'name' => "Kro&shy;nen&shy;durch&shy;mes&shy;ser",
     'format' => "{{ KRONENDURCHMESSER }} m",
+    'show_priority' => 2,
   ),
   'BAUMHOEHE' => array(
     'name' => "Baum&shy;höhe",
     'format' => "{{ BAUMHOEHE }} m",
+    'show_priority' => 2,
   ),
   'geo' => array(
     'name' => "Koor&shy;dina&shy;ten",
     'format' => "<a target='_blank' href='http://www.openstreetmap.org/?mlat={{ LAT }}&amp;mlon={{ LON }}&zoom=18'>{{ LAT|number_format(5) }} {{ LON|number_format(5) }}</a>",
+    'show_priority' => 4,
   ),
   'distance' => array(
     'name' => "Ent&shy;fern&shy;ung",
     'format' => "{% if distance %}{{ distance|number_format(0) }} m{% endif %}",
     'sort' => array("type" => "num", "dir" => "asc"),
+    'show_priority' => 5,
   ),
 );
