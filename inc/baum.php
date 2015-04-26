@@ -11,6 +11,15 @@ function modify_data(&$data) {
 }
 
 $form_search_def = array(
+  'OBJECTID' => array(
+    'type' => 'hidden',
+    'name' => 'OBJECTID',
+    'filter_function' => <<<EOT
+function(data, filter_value) {
+  return (data == filter_value);
+}
+EOT
+  ),
   'BAUMNUMMER' => array(
     'type' => 'text',
     'name' => 'Baumnummer',
@@ -81,6 +90,7 @@ EOT
 $table_def = array(
   'BAUMNUMMER' => array(
     'name' => "Baum&shy;num&shy;mer",
+    'link' => "?OBJECTID={{ OBJECTID }}",
   ),
   'GEBIET' => array(
     'name' => "Ge&shy;biet",
