@@ -41,24 +41,35 @@ function apply_filters(data, filter) {
 }
 
 function follow_link(a) {
+  var x = update_url(a.href);
+
+  if(x == true)
+    return false;
+}
+
+function update_url(url) {
   var location_base = location.href.slice(0, location.href.length - location.search.length);
-  var query_string = a.href.slice(location_base.length);
-  var query_data = {};
+  var query_string = url.slice(location_base.length);
 
   if(!query_string.match(/^\?/))
-    return;
+    return false;
 
+  var query_data = {};
   var parts = query_string.slice(1).split("&");
   for(var i = 0; i < parts.length; i++) {
     var p = parts[i].split("=");
     query_data[decodeURIComponent(p[0])] = decodeURIComponent(p[1]);
   }
 
+
   form_search.set_data(query_data);
   form_search.set_orig_data(form_search.get_data());
+
+  history.pushState(form_search.get_data(), null, query_string);
+
   update_location();
 
-  return false;
+  return true;
 }
 
 function catch_links(dom) {
@@ -127,6 +138,7 @@ function update_data(search_param, _data) {
 
 function update_location(reload) {
   var search_param = form_search.get_data();
+  history.replaceState(search_param, null, location.href);
 
   if(data) {
     var distance = haversine({
@@ -164,10 +176,17 @@ window.onload = function() {
   form_search = form__;
   form_search.onchange = update_location;
   load_filters();
+  window.addEventListener('popstate', function(event) {
+    form_search.set_data(event.state);
+    form_search.set_orig_data(form_search.get_data());
+    update_location();
+  });
   document.getElementById("form_search").onsubmit = function() {
     update_location();
     return false;
   }
+
+  history.replaceState(form_search.get_data(), null, location.href);
 
   // TODO: data may not have been loaded into JS space
   //catch_links(document.getElementById("table"));
