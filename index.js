@@ -30,6 +30,9 @@ function load_filters() {
 
 function apply_filters(data, filter) {
   for(var k in filters) {
+    if(filter[k] == null)
+      continue;
+
     if(!filters[k](data[k], filter[k]))
       return false;
   }
