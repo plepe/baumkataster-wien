@@ -40,6 +40,40 @@ function apply_filters(data, filter) {
   return true;
 }
 
+function follow_link(a) {
+  var location_base = location.href.slice(0, location.href.length - location.search.length);
+  var query_string = a.href.slice(location_base.length);
+  var query_data = {};
+
+  if(!query_string.match(/^\?/))
+    return;
+
+  var parts = query_string.slice(1).split("&");
+  for(var i = 0; i < parts.length; i++) {
+    var p = parts[i].split("=");
+    query_data[decodeURIComponent(p[0])] = decodeURIComponent(p[1]);
+  }
+
+  form_search.set_data(query_data);
+  form_search.set_orig_data(form_search.get_data());
+  update_location();
+
+  return false;
+}
+
+function catch_links(dom) {
+  var as = dom.getElementsByTagName("a");
+  var location_base = location.href.slice(0, location.href.length - location.search.length);
+
+  for(var i = 0; i < as.length; i++) {
+    var a = as[i];
+
+    if(a.href.slice(0, location_base.length) == location_base) {
+      a.onclick = follow_link.bind(this, a);
+    }
+  }
+}
+
 function update_table() {
   if(!data.data)
     return;
@@ -69,6 +103,8 @@ function update_table() {
     table_content = t.show("html", { limit: max_list });
 
   document.getElementById("table").innerHTML = table_content;
+
+  catch_links(document.getElementById("table"));
 }
 
 function update_data(search_param, _data) {
@@ -133,6 +169,8 @@ window.onload = function() {
     return false;
   }
 
+  // TODO: data may not have been loaded into JS space
+  //catch_links(document.getElementById("table"));
   call_hooks("init");
 
   orig_search_param = form_search.get_data();
