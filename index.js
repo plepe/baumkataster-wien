@@ -29,7 +29,9 @@ function update_table() {
   });
 
   var table_content = "";
-  if(data.data.length > 0)
+  if(data.data.length == 1)
+    table_content = t.show("html-transposed");
+  else if(data.data.length > 0)
     table_content = t.show("html", { limit: max_list });
 
   document.getElementById("table").innerHTML = table_content;
