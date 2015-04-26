@@ -45,7 +45,7 @@ if($form_search->is_complete()) {
     $table = new table($table_def, $data, array(
       'template_engine' => 'twig',
     ));
-    $table_content = $table->show("html", array(
+    $table_content = $table->show((sizeof($data) == 1 ? "html-transposed" : "html"), array(
       "limit" => $max_list,
     ));
   }
