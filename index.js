@@ -18,20 +18,51 @@ function update_distances() {
   }
 }
 
+var filters = {};
+function load_filters() {
+  for(var k in form_search.def) {
+    if(form_search.def[k].filter_function) {
+      eval("_filter = " + form_search.def[k].filter_function);
+      filters[k] = _filter;
+    }
+  }
+}
+
+function apply_filters(data, filter) {
+  for(var k in filters) {
+    if(!filters[k](data[k], filter[k]))
+      return false;
+  }
+
+  return true;
+}
+
 function update_table() {
   if(!data.data)
     return;
 
   update_distances();
+  var search_param = form_search.get_data();
 
-  var t = new table(table_def, data.data, {
+  var filtered_data = [];
+  for(var i = 0; i < data.data.length; i++) {
+    if(apply_filters(data.data[i], search_param))
+      filtered_data.push(data.data[i]);
+  }
+
+  var t = new table(table_def, filtered_data, {
     template_engine: "twig"
   });
 
+  twig_render_into(document.getElementById("search_status"), "result.html", {
+    'count': filtered_data.length,
+    'max_list': max_list
+  });
+
   var table_content = "";
-  if(data.data.length == 1)
+  if(filtered_data.length == 1)
     table_content = t.show("html-transposed");
-  else if(data.data.length > 0)
+  else if(filtered_data.length > 0)
     table_content = t.show("html", { limit: max_list });
 
   document.getElementById("table").innerHTML = table_content;
@@ -51,11 +82,6 @@ function update_data(search_param, _data) {
 
   data = _data;
   update_table();
-
-  twig_render_into(document.getElementById("search_status"), "result.html", {
-    'count': data.data.length,
-    'max_list': max_list
-  });
 
   twig_render_into(document.getElementById("footer"), "footer.html", data.info);
 }
@@ -98,8 +124,9 @@ function update_location(reload) {
 window.onload = function() {
   form_search = form__;
   form_search.onchange = update_location;
+  load_filters();
   document.getElementById("form_search").onsubmit = function() {
-    update_location(true);
+    update_location();
     return false;
   }
 
