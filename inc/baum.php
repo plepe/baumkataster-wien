@@ -31,6 +31,25 @@ $form_search_def = array(
 
       return "BAUMNUMMER=". $db->quote($v);
     },
+    'filter_function' => <<<EOT
+function(data, filter_value) {
+  if(!filter_value)
+    return true;
+
+  if(data == filter_value)
+    return true;
+
+  if(data == filter_value + "  ")
+    return true;
+
+  var m;
+  if(m = filter_value.match(/^([0-9]+)([0-9]{1})$/))
+    if(data == m[1] + " " + m[2])
+      return true;
+
+  return false;
+}
+EOT
   ),
   'location' => array(
     'type' => 'geolocation',
