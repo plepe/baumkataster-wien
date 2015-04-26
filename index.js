@@ -79,7 +79,12 @@ function update_location(reload) {
     reload = true;
 
   if(reload && (!reload_active)) {
-    ajax("data.php", search_param, update_data.bind(this, search_param));
+    var ajax_param = {
+      latitude: search_param.location.latitude,
+      longitude: search_param.location.longitude
+    };
+
+    ajax("data.php", ajax_param, update_data.bind(this, search_param));
     document.body.className = "loading";
     reload_active = true;
   }
