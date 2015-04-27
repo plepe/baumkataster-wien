@@ -40,7 +40,7 @@ register_hook("update_data", function(data) {
   for(var i = 0; i < data.data.length; i++) {
     var el = data.data[i];
 
-    features.push(new L.circleMarker([ el.LAT, el.LON ], {
+    var feature = new L.circleMarker([ el.LAT, el.LON ], {
       radius: 3,
       stroke: true,
       color: '#00ff00',
@@ -48,7 +48,13 @@ register_hook("update_data", function(data) {
       fillOpacity: 1,
       fill: true,
       fillColor: '#007f00'
-    }));
+    })
+
+    feature.on('click', function(ob, e) {
+      update_url("?OBJECTID=" + ob.OBJECTID);
+    }.bind(this, el));
+
+    features.push(feature);
   }
 
   if(map_features)

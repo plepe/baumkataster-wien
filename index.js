@@ -49,7 +49,13 @@ function follow_link(a) {
 
 function update_url(url) {
   var location_base = location.href.slice(0, location.href.length - location.search.length);
-  var query_string = url.slice(location_base.length);
+
+  if(url.match(/^\?/))
+    var query_string = url;
+  else if(url.slice(0, location_base.length) == location_base)
+    var query_string = url.slice(location_base.length);
+  else
+    alert("update_url(): invalid url: " + url);
 
   if(!query_string.match(/^\?/))
     return false;
