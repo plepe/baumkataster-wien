@@ -11,6 +11,15 @@ function modify_data(&$data) {
 }
 
 $form_search_def = array(
+  'OBJECTID' => array(
+    'type' => 'hidden',
+    'name' => 'OBJECTID',
+    'filter_function' => <<<EOT
+function(data, filter_value) {
+  return (data == filter_value);
+}
+EOT
+  ),
   'BAUMNUMMER' => array(
     'type' => 'text',
     'name' => 'Baumnummer',
@@ -31,6 +40,25 @@ $form_search_def = array(
 
       return "BAUMNUMMER=". $db->quote($v);
     },
+    'filter_function' => <<<EOT
+function(data, filter_value) {
+  if(!filter_value)
+    return true;
+
+  if(data == filter_value)
+    return true;
+
+  if(data == filter_value + "  ")
+    return true;
+
+  var m;
+  if(m = filter_value.match(/^([0-9]+)([0-9]{1})$/))
+    if(data == m[1] + " " + m[2])
+      return true;
+
+  return false;
+}
+EOT
   ),
   'location' => array(
     'type' => 'geolocation',
@@ -62,6 +90,7 @@ $form_search_def = array(
 $table_def = array(
   'BAUMNUMMER' => array(
     'name' => "Baum&shy;num&shy;mer",
+    'link' => "?OBJECTID={{ OBJECTID }}",
   ),
   'GEBIET' => array(
     'name' => "Ge&shy;biet",

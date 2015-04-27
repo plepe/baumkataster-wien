@@ -12,7 +12,14 @@ $form_search = new form(null, $form_search_def, array(
     'orig_data' => false,
   ));
 
-if($form_search->is_complete()) {
+$form_search->set_data(array(
+  "location" => array(
+    "latitude" => $_REQUEST['latitude'],
+    "longitude" => $_REQUEST['longitude'],
+  ),
+));
+
+if(true) {
   $search = $form_search->save_data();
   $form_search->set_orig_data($search);
 
