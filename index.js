@@ -114,10 +114,17 @@ function update_table() {
   });
 
   var table_content = "";
-  if(filtered_data.length == 1)
+  if(filtered_data.length == 1) {
     table_content = t.show("html-transposed");
-  else if(filtered_data.length > 0)
+    call_hooks("show_single", filtered_data[0]);
+  }
+  else if(filtered_data.length > 0) {
     table_content = t.show("html", { limit: max_list });
+    call_hooks("show_multiple", filtered_data);
+  }
+  else {
+    call_hooks("show_empty");
+  }
 
   document.getElementById("table").innerHTML = table_content;
 
@@ -137,9 +144,10 @@ function update_data(search_param, _data) {
   }
 
   data = _data;
-  update_table();
 
   call_hooks("update_data", data);
+
+  update_table();
 
   twig_render_into(document.getElementById("footer"), "footer.html", data.info);
 }
