@@ -1,5 +1,6 @@
 var map;
 var map_features;
+var loc_feature;
 
 register_hook("init", function() {
   map = L.map('map').setView([map_config.lat, map_config.lon], map_config.zoom);
@@ -12,9 +13,25 @@ register_hook("init", function() {
 
 register_hook("update_location", function(data) {
   if(data.location) {
-    map.setView(
-      [ data.location.latitude, data.location.longitude ]
-    );
+    var pos = [ data.location.latitude, data.location.longitude ];
+
+    map.setView(pos);
+
+    if(!loc_feature) {
+      var icon = L.icon({
+	iconUrl: 'img/geolocation.svg',
+	iconSize: [ 19, 19 ],
+	iconAnchor: [ 10, 10 ]
+      });
+
+      loc_feature = new L.marker(pos, {
+	icon: icon,
+	clickable: false
+      });
+      loc_feature.addTo(map);
+    }
+    else
+      loc_feature.setLatLng(pos);
   }
 });
 
