@@ -1,7 +1,7 @@
 <?php include "conf.php"; /* load a local configuration */ ?>
 <?php include "modulekit/loader.php"; /* loads all php-includes */ ?>
 <?
-$f = fopen("http://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:BAUMOGD&srsName=EPSG:4326&outputFormat=csv", "r");
+$f = fopen($ogd_source, "r");
 $headers = fgetcsv($f);
 $r = array_map("utf8_encode", $headers);
 
