@@ -23,10 +23,13 @@ if(true) {
   $search = $form_search->save_data();
   $form_search->set_orig_data($search);
 
-  $data = array(
+  list($count, $data) = get_data($search, $form_search_def, null);
+
+  $result = array(
     'info' => data_info(),
-    'data' => get_data($search, $form_search_def),
+    'count' => $count,
+    'data' => $data,
   );
 
-  print json_readable_encode($data);
+  print json_readable_encode($result);
 }

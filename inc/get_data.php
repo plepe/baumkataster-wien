@@ -1,5 +1,5 @@
 <?php
-function get_data($search, $form_search_def) {
+function get_data($search, $form_search_def, $limit = null) {
   global $db;
 
   $where = array();
@@ -43,7 +43,15 @@ function get_data($search, $form_search_def) {
   else
     $order = "";
 
+  $query = "select count(*) c from (select *{$add_columns} from data {$where}) t";
+  $res = $db->query($query);
+  $elem = $res->fetch();
+  $count = $elem['c'];
+  $res->closeCursor();
+
   $query = "select *{$add_columns} from data {$where} {$order}";
+  if($limit !== null)
+    $query .= " limit {$limit}";
   //print "<pre wrap>". htmlspecialchars($query) ."</pre>\n";
   $res = $db->query($query);
   $data = array();
@@ -52,5 +60,5 @@ function get_data($search, $form_search_def) {
   }
   $res->closeCursor();
 
-  return $data;
+  return array($count, $data);
 }
