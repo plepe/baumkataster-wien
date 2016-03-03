@@ -114,10 +114,12 @@ function update_table() {
 
   var table_content = "";
   if(filtered_data.length == 1)
-    table_content = t.show("html-transposed");
+    t.show("html-transposed", update_table_show);
   else if(filtered_data.length > 0)
-    table_content = t.show("html", { limit: max_list });
+    t.show("html", { limit: max_list }, update_table_show);
+}
 
+function update_table_show(table_content) {
   document.getElementById("table").innerHTML = table_content;
 
   catch_links(document.getElementById("table"));
