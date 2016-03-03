@@ -8,13 +8,18 @@ function update_distances() {
   for(var i = 0; i < data.data.length; i++) {
     var el = data.data[i];
 
-    el.distance = haversine({
-      latitude: search_param.location.latitude,
-      longitude: search_param.location.longitude
-    }, {
-      latitude: parseFloat(el.LAT),
-      longitude: parseFloat(el.LON),
-    }, {unit: 'meter'});
+    if(search_param.location) {
+      el.distance = haversine({
+	latitude: search_param.location.latitude,
+	longitude: search_param.location.longitude
+      }, {
+	latitude: parseFloat(el.LAT),
+	longitude: parseFloat(el.LON),
+      }, {unit: 'meter'});
+    }
+    else {
+      el.distance = '';
+    }
   }
 }
 
@@ -141,25 +146,29 @@ function update_location(reload) {
   history.replaceState(search_param, null, location.href);
 
   if(data) {
-    var distance = haversine({
-	latitude: search_param.location.latitude,
-	longitude: search_param.location.longitude
-      }, {
-	latitude: orig_search_param.location.latitude,
-	longitude: orig_search_param.location.longitude,
-      }, {unit: 'meter'});
+    if(search_param.location) {
+      var distance = haversine({
+	  latitude: search_param.location.latitude,
+	  longitude: search_param.location.longitude
+	}, {
+	  latitude: orig_search_param.location.latitude,
+	  longitude: orig_search_param.location.longitude,
+	}, {unit: 'meter'});
 
-    if(distance > 100)
-      reload = true;
+      if(distance > 100)
+	reload = true;
+    }
   }
   else
     reload = true;
 
   if(reload && (!reload_active)) {
-    var ajax_param = {
-      latitude: search_param.location.latitude,
-      longitude: search_param.location.longitude
-    };
+    var ajax_param = {};
+
+    if(search_param.location) {
+      ajax_param.latitude = search_param.location.latitude;
+      ajax_param.longitude = search_param.location.longitude;
+    }
 
     ajax("data.php", ajax_param, update_data.bind(this, search_param));
     document.body.className = "loading";
