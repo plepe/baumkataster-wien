@@ -25,7 +25,8 @@ $db->query("create table data (". implode(", ", array_map(function($col) {
 }, $headers)) . ")");
 
 while($r = fgetcsv($f)) {
-  $r = array_map("utf8_encode", $r);
+  if($ogd_source_encoding == "ISO-8859-1")
+    $r = array_map("utf8_encode", $r);
 
   modify_data($r);
 
