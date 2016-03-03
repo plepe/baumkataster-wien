@@ -145,6 +145,8 @@ function update_location(reload) {
   var search_param = form_search.get_data();
   history.replaceState(search_param, null, location.href);
 
+  var ajax_param = {};
+
   if(data) {
     if(search_param.location) {
       var distance = haversine({
@@ -162,9 +164,14 @@ function update_location(reload) {
   else
     reload = true;
 
-  if(reload && (!reload_active)) {
-    var ajax_param = {};
+  if(!search_param.location) {
+    if(search_param.BAUMNUMMER)
+      ajax_param.BAUMNUMMER = search_param.BAUMNUMMER;
 
+    reload = true;
+  }
+
+  if(reload && (!reload_active)) {
     if(search_param.location) {
       ajax_param.latitude = search_param.location.latitude;
       ajax_param.longitude = search_param.location.longitude;
