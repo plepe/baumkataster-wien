@@ -26,18 +26,6 @@ EOT
     'sql_function' => function($v) {
       global $db;
 
-      if(preg_match("/^([0-9]+)([0-9]{1})$/", $v, $m)) {
-	return "BAUMNUMMER in (". $db->quote($m[1]." ".$m[2]). ", ". $db->quote("{$m[1]}{$m[2]}  ").")";
-      }
-
-      if(preg_match("/^([0-9]+) ?([0-9A-Za-z]+)?$/", $v, $m)) {
-	if(!$m[2])
-	  $m[2] = " ";
-	$m[2] = strtoupper($m[2]);
-
-	return "BAUMNUMMER=". $db->quote("{$m[1]} {$m[2]}");
-      }
-
       return "BAUMNUMMER=". $db->quote($v);
     },
     'filter_function' => <<<EOT
@@ -47,14 +35,6 @@ function(data, filter_value) {
 
   if(data == filter_value)
     return true;
-
-  if(data == filter_value + "  ")
-    return true;
-
-  var m;
-  if(m = filter_value.match(/^([0-9]+)([0-9]{1})$/))
-    if(data == m[1] + " " + m[2])
-      return true;
 
   return false;
 }
@@ -92,30 +72,30 @@ $table_def = array(
     'name' => "Baum&shy;num&shy;mer",
     'link' => "?OBJECTID={{ OBJECTID }}",
   ),
-  'GEBIET' => array(
+  'GEBIETSGRUPPE' => array(
     'name' => "Ge&shy;biet",
   ),
-  'STRASSE' => array(
+  'OBJEKT_STRASSE' => array(
     'name' => "Straße / Park",
   ),
-  'ART' => array(
+  'GATTUNG_ART' => array(
     'name' => "Art",
   ),
   'PFLANZJAHR' => array(
     'name' => "Pflanz&shy;jahr",
-    'format' => "{% if PFLANZJAHR %} {{ PFLANZJAHR }} {% endif %}",
+    'format' => "{% if PFLANZJAHR != 0 %} {{ PFLANZJAHR }} {% endif %}",
   ),
   'STAMMUMFANG' => array(
     'name' => "Stamm&shy;um&shy;fang",
-    'format' => "{{ STAMMUMFANG }} cm",
+    'format' => "{% if STAMMUMFANG != 0 %}{{ STAMMUMFANG }} cm{% endif %}",
   ),
   'KRONENDURCHMESSER' => array(
     'name' => "Kro&shy;nen&shy;durch&shy;mes&shy;ser",
-    'format' => "{{ KRONENDURCHMESSER }} m",
+    'format' => "{% if KRONENDURCHMESSER == 0 %}{% elseif KRONENDURCHMESSER == 1 %}0-3 m{% elseif KRONENDURCHMESSER == 8 %}> 21 m{% else %}{{ KRONENDURCHMESSER * 3 - 2 }}-{{ KRONENDURCHMESSER * 3 }} m{% endif %}",
   ),
   'BAUMHOEHE' => array(
     'name' => "Baum&shy;höhe",
-    'format' => "{{ BAUMHOEHE }} m",
+    'format' => "{% if BAUMHOEHE == 0 %}{% elseif BAUMHOEHE == 1 %}0-5 m{% elseif BAUMHOEHE == 8 %}> 35 m{% else %}{{ BAUMHOEHE * 5 - 4 }}-{{ BAUMHOEHE * 5 }} m{% endif %}",
   ),
   'geo' => array(
     'name' => "Koor&shy;dina&shy;ten",
