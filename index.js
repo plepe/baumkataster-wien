@@ -185,6 +185,23 @@ function update_location(reload) {
     reload_active = true;
   }
 
+  var url = [];
+
+  for(var k in search_param) {
+    if(k == 'location') {
+      url.push('location[latitude]=' + encodeURIComponent(search_param.location.latitude));
+      url.push('location[longitude]=' + encodeURIComponent(search_param.location.longitude));
+    }
+    else {
+      if(search_param[k])
+	url.push(encodeURIComponent(k) + '=' + encodeURIComponent(search_param[k]));
+    }
+  }
+
+  url = '.?' + url.join('&');
+
+  history.replaceState(form_search.get_data(), null, url);
+
   if(!data)
     return;
 
