@@ -112,11 +112,12 @@ function update_table() {
     'max_list': max_list
   });
 
-  var table_content = "";
   if(filtered_data.length == 1)
     t.show("html-transposed", update_table_show);
   else if(filtered_data.length > 0)
     t.show("html", { limit: max_list }, update_table_show);
+  else
+    update_table_show("");
 }
 
 function update_table_show(table_content) {
