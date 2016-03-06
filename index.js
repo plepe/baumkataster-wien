@@ -113,17 +113,19 @@ function update_table() {
   });
 
   if(filtered_data.length == 1)
-    t.show("html-transposed", update_table_show);
+    t.show("html-transposed", update_table_show.bind(this, t));
   else if(filtered_data.length > 0)
-    t.show("html", { limit: max_list }, update_table_show);
+    t.show("html", { limit: max_list }, update_table_show.bind(this, t));
   else
-    update_table_show("");
+    update_table_show(t, "");
 }
 
-function update_table_show(table_content) {
+function update_table_show(t, table_content) {
   document.getElementById("table").innerHTML = table_content;
 
   catch_links(document.getElementById("table"));
+
+  t.resize();
 }
 
 function update_data(search_param, _data) {
