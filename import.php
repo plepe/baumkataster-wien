@@ -3,7 +3,8 @@
 <?
 $f = fopen($ogd_source, "r");
 $headers = fgetcsv($f);
-$r = array_map("utf8_encode", $headers);
+if($ogd_source_encoding == "ISO-8859-1")
+  $r = array_map("utf8_encode", $headers);
 
 mkdir("data");
 unlink("data/baum.db");
