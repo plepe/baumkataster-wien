@@ -106,7 +106,6 @@ $table_def = array(
   ),
   'GATTUNG_ART' => array(
     'name' => "Art",
-    'show_priority' => 7,
   ),
   'PFLANZJAHR' => array(
     'name' => "Pflanz&shy;jahr",
@@ -137,6 +136,6 @@ $table_def = array(
     'name' => "Ent&shy;fern&shy;ung",
     'format' => "{% if distance %}{{ distance|number_format(0) }} m{% endif %}",
     'sort' => array("type" => "num", "dir" => "asc"),
-    'show_priority' => 5,
+    'show_priority' => 7,
   ),
 );
