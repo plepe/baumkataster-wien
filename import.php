@@ -13,23 +13,34 @@ $db = new PDO("sqlite:data/baum.db");
 
 $db->beginTransaction();
 
-modify_headers($headers);
-
-$db->query("create table data (". implode(", ", array_map(function($col) {
+$db->query("create table data (". implode(", ", array_map(function($col, $def) {
   global $db;
 
-  if(is_array($col)) {
-    return $db->quote($col[0]) ." ". $col[1];
-  }
-  else
-    return $db->quote($col) . " text";
-}, $headers)) . ")");
+  if($def === null)
+    $def = array();
+  if(!array_key_exists('type', $def))
+    $def['type'] = 'text';
+
+  return $db->quote($col) ." ". $def['type'];
+}, array_keys($db_columns), $db_columns)) . ")");
 
 while($r = fgetcsv($f)) {
   if($ogd_source_encoding == "ISO-8859-1")
     $r = array_map("utf8_encode", $r);
 
-  modify_data($r);
+  $r = array_combine($headers, $r);
+
+  $r = array_map(function($col, $def) use ($r) {
+    if($def === null)
+      $def = array();
+    if(!array_key_exists('csv', $def))
+      $def['csv'] = $col;
+
+    if(array_key_exists('modify', $def))
+      return call_user_func($def['modify'], $r);
+    else
+      return $r[$def['csv']];
+  }, array_keys($db_columns), $db_columns);
 
   $db->query("insert into data values (". implode(", ", array_map(function($v) {
     global $db;

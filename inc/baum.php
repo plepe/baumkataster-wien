@@ -1,14 +1,38 @@
 <?php
-function modify_headers(&$headers) {
-  $headers[] = array("LAT", "real");
-  $headers[] = array("LON", "real");
-}
-
-function modify_data(&$data) {
-  preg_match("/POINT \(([0-9\.]+) ([0-9\.]+)\)/", $data[2], $m);
-  $data[] = $m[2];
-  $data[] = $m[1];
-}
+/**
+ * array(
+ *   'type' => 'text|real|...',
+ *   'csv'  => 'alternative csv column name',
+ *   'modify' => function which parses data from array
+ */
+$db_columns = array(
+  'OBJECTID' => array(
+    'type' => 'text',
+  ),
+  'BAUMNUMMER' => null,
+  'BEZIRK' => null,
+  'OBJEKT_STRASSE' => null,
+  'GEBIETSGRUPPE' => null,
+  'GATTUNG_ART' => null,
+  'PFLANZJAHR' => null,
+  'STAMMUMFANG' => null,
+  'BAUMHOEHE' => null,
+  'KRONENDURCHMESSER' => null,
+  'LAT' => array(
+    'type' => 'real',
+    'modify' => function($data) {
+      preg_match("/POINT \(([0-9\.]+) ([0-9\.]+)\)/", $data['SHAPE'], $m);
+      return $m[2];
+    }
+  ),
+  'LON' => array(
+    'type' => 'real',
+    'modify' => function($data) {
+      preg_match("/POINT \(([0-9\.]+) ([0-9\.]+)\)/", $data['SHAPE'], $m);
+      return $m[1];
+    }
+  ),
+);
 
 $form_search_def = array(
   'OBJECTID' => array(
