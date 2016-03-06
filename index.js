@@ -231,4 +231,5 @@ window.onload = function() {
   call_hooks("init");
 
   orig_search_param = form_search.get_data();
+  update_location();
 }
