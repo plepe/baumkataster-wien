@@ -33,6 +33,9 @@ if($form_search->is_complete()) {
   $search = $form_search->save_data();
   $form_search->set_orig_data($search);
 
+  if(!array_key_exists('location', $search) || !array_key_exists('latitude', $search['location']))
+    unset($search['location']);
+
   list($count, $data) = get_data($search, $form_search_def, $max_list);
 
   $search_status = twig_render("result.html", array(
