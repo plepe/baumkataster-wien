@@ -98,36 +98,45 @@ $table_def = array(
   ),
   'GEBIETSGRUPPE' => array(
     'name' => "Ge&shy;biet",
+    'show_priority' => 1,
   ),
   'OBJEKT_STRASSE' => array(
     'name' => "Straße / Park",
+    'show_priority' => 6,
   ),
   'GATTUNG_ART' => array(
     'name' => "Art",
+    'show_priority' => 7,
   ),
   'PFLANZJAHR' => array(
     'name' => "Pflanz&shy;jahr",
     'format' => "{% if PFLANZJAHR != 0 %} {{ PFLANZJAHR }} {% endif %}",
+    'show_priority' => 3,
   ),
   'STAMMUMFANG' => array(
     'name' => "Stamm&shy;um&shy;fang",
     'format' => "{% if STAMMUMFANG != 0 %}{{ STAMMUMFANG }} cm{% endif %}",
+    'show_priority' => 2,
   ),
   'KRONENDURCHMESSER' => array(
     'name' => "Kro&shy;nen&shy;durch&shy;mes&shy;ser",
     'format' => "{% if KRONENDURCHMESSER == 0 %}{% elseif KRONENDURCHMESSER == 1 %}0-3 m{% elseif KRONENDURCHMESSER == 8 %}> 21 m{% else %}{{ KRONENDURCHMESSER * 3 - 2 }}-{{ KRONENDURCHMESSER * 3 }} m{% endif %}",
+    'show_priority' => 2,
   ),
   'BAUMHOEHE' => array(
     'name' => "Baum&shy;höhe",
     'format' => "{% if BAUMHOEHE == 0 %}{% elseif BAUMHOEHE == 1 %}0-5 m{% elseif BAUMHOEHE == 8 %}> 35 m{% else %}{{ BAUMHOEHE * 5 - 4 }}-{{ BAUMHOEHE * 5 }} m{% endif %}",
+    'show_priority' => 2,
   ),
   'geo' => array(
     'name' => "Koor&shy;dina&shy;ten",
     'format' => "<a target='_blank' href='http://www.openstreetmap.org/?mlat={{ LAT }}&amp;mlon={{ LON }}&zoom=18'>{{ LAT|number_format(5) }} {{ LON|number_format(5) }}</a>",
+    'show_priority' => 4,
   ),
   'distance' => array(
     'name' => "Ent&shy;fern&shy;ung",
     'format' => "{% if distance %}{{ distance|number_format(0) }} m{% endif %}",
     'sort' => array("type" => "num", "dir" => "asc"),
+    'show_priority' => 5,
   ),
 );
