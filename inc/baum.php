@@ -74,6 +74,9 @@ EOT
     'sql_function' => function($v) {
       global $db;
 
+      if(!array_key_exists('latitude', $v))
+	return;
+
       // 0.0090 resp 0.0135 is approx. 1.5km at the center of Vienna, Austria
       $bbox = array(
 	(float)$v['latitude'] - 0.0090,
