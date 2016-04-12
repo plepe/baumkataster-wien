@@ -154,16 +154,21 @@ function update_location(reload) {
 
   if(data) {
     if(search_param.location) {
-      var distance = haversine({
-	  latitude: search_param.location.latitude,
-	  longitude: search_param.location.longitude
-	}, {
-	  latitude: orig_search_param.location.latitude,
-	  longitude: orig_search_param.location.longitude,
-	}, {unit: 'meter'});
+      if(orig_search_param.location) {
+	var distance = haversine({
+	    latitude: search_param.location.latitude,
+	    longitude: search_param.location.longitude
+	  }, {
+	    latitude: orig_search_param.location.latitude,
+	    longitude: orig_search_param.location.longitude,
+	  }, {unit: 'meter'});
 
-      if(distance > 100)
+	if(distance > 100)
+	  reload = true;
+      }
+      else {
 	reload = true;
+      }
     }
   }
   else
@@ -190,7 +195,7 @@ function update_location(reload) {
   var url = [];
 
   for(var k in search_param) {
-    if(k == 'location') {
+    if((k == 'location') && (search_param.location)) {
       url.push('location[latitude]=' + encodeURIComponent(search_param.location.latitude));
       url.push('location[longitude]=' + encodeURIComponent(search_param.location.longitude));
     }
