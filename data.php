@@ -25,7 +25,7 @@ if(true) {
   $search = $form_search->save_data();
   $form_search->set_orig_data($search);
 
-  list($count, $data) = get_data($search, $form_search_def, null);
+  list($count, $data) = get_data($search, $form_search_def);
 
   $result = array(
     'info' => data_info(),

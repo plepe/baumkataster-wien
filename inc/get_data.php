@@ -1,5 +1,5 @@
 <?php
-function get_data($search, $form_search_def, $limit = null) {
+function get_data($search, $form_search_def, $limit = 1024) {
   global $db;
 
   $where = array();
