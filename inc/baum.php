@@ -5,6 +5,12 @@
  *   'csv'  => 'alternative csv column name',
  *   'modify' => function which parses data from array
  */
+$source = array(
+  'file' => "http://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:BAUMKATOGD&srsName=EPSG:4326&outputFormat=csv",
+  'encoding' => 'UTF-8',
+  'type' => 'csv',
+);
+
 $db_columns = array(
   'OBJECTID' => array(
     'type' => 'text',

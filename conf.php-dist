@@ -1,3 +1,1 @@
 <?php
-$ogd_source = "http://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:BAUMKATOGD&srsName=EPSG:4326&outputFormat=csv";
-$ogd_source_encoding = "UTF-8"; // "ISO-8859-1"

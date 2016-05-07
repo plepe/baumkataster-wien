@@ -1,9 +1,9 @@
 <?php include "conf.php"; /* load a local configuration */ ?>
 <?php include "modulekit/loader.php"; /* loads all php-includes */ ?>
 <?
-$f = fopen($ogd_source, "r");
+$f = fopen($source['file'], "r");
 $headers = fgetcsv($f);
-if($ogd_source_encoding == "ISO-8859-1")
+if($source['encoding'] == "ISO-8859-1")
   $r = array_map("utf8_encode", $headers);
 
 mkdir("data");
@@ -25,7 +25,7 @@ $db->query("create table data (". implode(", ", array_map(function($col, $def) {
 }, array_keys($db_columns), $db_columns)) . ")");
 
 while($r = fgetcsv($f)) {
-  if($ogd_source_encoding == "ISO-8859-1")
+  if($source['encoding'] == "ISO-8859-1")
     $r = array_map("utf8_encode", $r);
 
   $r = array_combine($headers, $r);
