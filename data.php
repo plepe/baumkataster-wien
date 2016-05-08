@@ -14,11 +14,6 @@ if(array_key_exists('dataset', $_REQUEST)) {
   }
 }
 
-$db = new PDO("sqlite:data/baum.db");
-$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
-$db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-include("inc/db.php");
-
 $form_search = new form(null, $form_search_def, array(
     'orig_data' => false,
   ));

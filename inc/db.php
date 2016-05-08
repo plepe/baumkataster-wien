@@ -1,4 +1,8 @@
 <?php
+$db = new PDO("sqlite:data/baum.db");
+$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+$db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+
 $db->sqliteCreateFunction('regexp',
     function ($pattern, $data, $delimiter = '~', $modifiers = 'isuS')
     {

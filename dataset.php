@@ -30,11 +30,6 @@ html_export_var(array("dataset" => $dataset, "table_def" => $table_def, "max_lis
   <body>
 <?php call_hooks("html_head"); ?>
 <?php
-$db = new PDO("sqlite:data/baum.db");
-$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
-$db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-include("inc/db.php");
-
 $form_search = new form(null, $form_search_def, array(
     'orig_data' => false,
   ));
