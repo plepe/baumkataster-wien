@@ -6,6 +6,9 @@
  *   'modify' => function which parses data from array
  */
 $source = array(
+  'url' => 'https://www.data.gv.at/katalog/dataset/8df93e04-e07f-45ff-8687-8664c2e219e9',
+  'title' => 'Baumkataster der Stadt Wien',
+  'license' => "<a href='https://creativecommons.org/licenses/by-sa/3.0/at/'>CC BY-SA 3.0 AT</a>",
   'file' => "http://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:BAUMKATOGD&srsName=EPSG:4326&outputFormat=csv",
   'encoding' => 'UTF-8',
   'type' => 'csv',

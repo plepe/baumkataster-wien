@@ -5,8 +5,8 @@
 <?php
 if(array_key_exists('dataset', $_REQUEST)) {
   if(in_array($_REQUEST['dataset'], $datasets)) {
-    $id = $_REQUEST['dataset'];
-    include "datasets/{$id}.php";
+    $dataset = new Dataset($_REQUEST['dataset']);
+    include "datasets/{$_REQUEST['dataset']}.php"; // deprecated
   }
   else {
     print "Invalid dataset!";
@@ -34,7 +34,7 @@ if(true) {
   list($count, $data) = get_data($search, $form_search_def);
 
   $result = array(
-    'info' => data_info(),
+    'info' => $dataset->view(),
     'count' => $count,
     'data' => $data,
   );

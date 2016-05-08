@@ -5,8 +5,8 @@
 <?php
 if(array_key_exists('dataset', $_REQUEST)) {
   if(in_array($_REQUEST['dataset'], $datasets)) {
-    $dataset = $_REQUEST['dataset'];
-    include "datasets/{$dataset}.php";
+    $dataset = new Dataset($_REQUEST['dataset']);
+    include "datasets/{$_REQUEST['dataset']}.php"; // deprecated
   }
   else {
     print "Invalid dataset!";
@@ -15,7 +15,7 @@ if(array_key_exists('dataset', $_REQUEST)) {
 }
 
 $max_list = 30;
-html_export_var(array("dataset" => $dataset, "table_def" => $table_def, "max_list" => $max_list));
+html_export_var(array("dataset" => $dataset->id, "table_def" => $table_def, "max_list" => $max_list));
 ?>
 <!DOCTYPE html>
 <html>
@@ -30,6 +30,7 @@ html_export_var(array("dataset" => $dataset, "table_def" => $table_def, "max_lis
   <body>
 <?php call_hooks("html_head"); ?>
 <?php
+
 $form_search = new form(null, $form_search_def, array(
     'orig_data' => false,
   ));
@@ -77,7 +78,7 @@ print "</div>\n";
 ?>
 <div id='footer'>
 <?php
-print twig_render("footer.html", data_info());
+print twig_render("footer.html", $dataset->view());
 ?>
 </div>
 </div>
