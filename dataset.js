@@ -150,7 +150,9 @@ function update_location(reload) {
   var search_param = form_search.get_data();
   history.replaceState(search_param, null, location.href);
 
-  var ajax_param = {};
+  var ajax_param = {
+    dataset: dataset
+  };
 
   if(data) {
     if(search_param.location) {

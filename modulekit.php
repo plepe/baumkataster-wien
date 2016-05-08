@@ -4,10 +4,10 @@ $depend = array("modulekit-form", "modulekit-table", "twig", "modulekit-form-geo
 $include = array(
   'php'=> array(
     'inc/get_data.php',
-    'inc/baum.php',
+    'datasets/baum.php',
   ),
   'js' => array(
-    'index.js',
+    'dataset.js',
     'inc/haversine.js',
   ),
   'css' => array(

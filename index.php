@@ -19,62 +19,14 @@ html_export_var(array("table_def" => $table_def, "max_list" => $max_list));
   <body>
 <?php call_hooks("html_head"); ?>
 <?php
-$db = new PDO("sqlite:data/baum.db");
-$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
-$db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-include("inc/db.php");
+print "Available Datasets:";
 
-$form_search = new form(null, $form_search_def, array(
-    'orig_data' => false,
-  ));
-
-$content = "";
-if($form_search->is_complete()) {
-  $search = $form_search->save_data();
-  $form_search->set_orig_data($search);
-
-  if(!array_key_exists('location', $search) || !array_key_exists('latitude', $search['location']))
-    unset($search['location']);
-
-  list($count, $data) = get_data($search, $form_search_def, $max_list);
-
-  $search_status = twig_render("result.html", array(
-    'count' => $count,
-    'max_list' => $max_list,
-  ));
-
-  $table_content = "";
-  if(sizeof($data)) {
-    $table = new table($table_def, $data, array(
-      'template_engine' => 'twig',
-    ));
-    $table_content = $table->show((sizeof($data) == 1 ? "html-transposed" : "html"), array(
-      "limit" => $max_list,
-    ));
-  }
+print "<ul>\n";
+foreach($datasets as $id) {
+  print "<li><a href='dataset.php?dataset={$id}'>{$id}</a></li>\n";
 }
-else {
-  $content = "Bitte Baumnummer angeben oder auf Erkennung Deiner Position warten.";
-}
-
-print "<div id='content-container'>\n";
-print "<form id='form_search' method='get'>\n";
-print $form_search->show();
-print "<input type='submit' value='Suche'>";
-print "<span id='load_status'>". twig_render("load_status.html", array()) ."</span>\n";
-print "</form><hr>\n";
-
-print "<div id='content'>\n";
-print "<div id='search_status'>{$search_status}</div>\n";
-print "<div id='table'>{$table_content}</div>\n";
-print "</div>\n";
+print "</ul>\n";
 ?>
-<div id='footer'>
-<?php
-print twig_render("footer.html", data_info());
-?>
-</div>
-</div>
 <?php call_hooks("html_bottom"); ?>
   </body>
 </html>

@@ -3,6 +3,17 @@
 <?php call_hooks("init"); ?>
 <?php Header("content-type: application/json; charset=utf-8"); ?>
 <?php
+if(array_key_exists('dataset', $_REQUEST)) {
+  if(in_array($_REQUEST['dataset'], $datasets)) {
+    $id = $_REQUEST['dataset'];
+    include "datasets/{$id}.php";
+  }
+  else {
+    print "Invalid dataset!";
+    exit(1);
+  }
+}
+
 $db = new PDO("sqlite:data/baum.db");
 $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
 $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
