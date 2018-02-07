@@ -1,6 +1,6 @@
 <?php include "conf.php"; /* load a local configuration */ ?>
 <?php include "modulekit/loader.php"; /* loads all php-includes */ ?>
-<?
+<?php
 $f = fopen($source['file'], "r");
 $headers = fgetcsv($f);
 if($source['encoding'] == "ISO-8859-1")
