@@ -6,7 +6,7 @@
  *   'modify' => function which parses data from array
  */
 $source = array(
-  'file' => "http://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:BAUMKATOGD&srsName=EPSG:4326&outputFormat=csv",
+  'file' => 'https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:BAUMKATOGD&srsName=EPSG:4326&outputFormat=csv',
   'encoding' => 'UTF-8',
   'type' => 'csv',
 );
